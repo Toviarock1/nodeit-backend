@@ -15,6 +15,16 @@ async function login(req, res) {
   console.log(req.body);
   const payload = _.pick(req.body, ["email", "password"]);
   console.log("PAYLOAD", payload);
+  if (!payload.email && !payload.password) {
+    return res.status(BAD_REQUEST).json(
+      response({
+        message: "Please provide the following fields (email & password)",
+        status: BAD_REQUEST,
+        success: false,
+        data: {},
+      })
+    );
+  }
   const user = await prisma.user.findUnique({
     where: {
       email: payload.email,
@@ -29,7 +39,7 @@ async function login(req, res) {
         status: BAD_REQUEST,
         success: false,
         data: {},
-      }),
+      })
     );
   }
 
@@ -41,7 +51,7 @@ async function login(req, res) {
         status: BAD_REQUEST,
         success: false,
         data: {},
-      }),
+      })
     );
   }
 
@@ -52,7 +62,7 @@ async function login(req, res) {
       email: user.email,
     },
     process.env.JWT_SECRET,
-    { expiresIn: process.env.EXPIRY_TIME },
+    { expiresIn: process.env.EXPIRY_TIME }
   );
   const filteredUser = _.pick(user, ["id", "firstname", "lastname", "email"]);
 
@@ -62,7 +72,7 @@ async function login(req, res) {
       status: OK,
       success: true,
       data: { ...filteredUser, token },
-    }),
+    })
   );
 }
 
@@ -85,7 +95,7 @@ async function register(req, res) {
         status: BAD_REQUEST,
         success: false,
         data: {},
-      }),
+      })
     );
   }
   const existingUser = await prisma.user.findUnique({
@@ -101,7 +111,7 @@ async function register(req, res) {
         status: BAD_REQUEST,
         success: false,
         data: {},
-      }),
+      })
     );
   }
   const hashPassword = await bcrypt
@@ -122,7 +132,7 @@ async function register(req, res) {
       status: CREATED,
       success: true,
       data: payload,
-    }),
+    })
   );
 }
 
