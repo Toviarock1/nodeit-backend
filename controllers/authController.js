@@ -15,7 +15,7 @@ async function login(req, res) {
   console.log(req.body);
   const payload = _.pick(req.body, ["email", "password"]);
   console.log("PAYLOAD", payload);
-  if (!payload.email && !payload.password) {
+  if (Object.keys(payload).length < 2) {
     return res.status(BAD_REQUEST).json(
       response({
         message: "Please provide the following fields (email & password)",
