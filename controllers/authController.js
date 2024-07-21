@@ -12,7 +12,7 @@ const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 
 async function login(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   const payload = _.pick(req.body, ["email", "password"]);
   console.log("PAYLOAD", payload);
   if (Object.keys(payload).length <= 1) {
@@ -86,7 +86,7 @@ async function register(req, res) {
 
   try {
     const success = await registerValidation(payload);
-    console.log(success);
+    // console.log(success);
   } catch (err) {
     console.log(err);
     res.status(BAD_REQUEST).json(
@@ -117,15 +117,15 @@ async function register(req, res) {
   const hashPassword = await bcrypt
     .hash(payload.password, saltRounds)
     .then(function (hash) {
-      console.log(hash);
+      // console.log(hash);
       return hash;
     });
-  console.log("hashpassword", hashPassword);
+  // console.log("hashpassword", hashPassword);
 
   const newUser = await prisma.user.create({
     data: { ...payload, password: hashPassword },
   });
-  console.log(newUser);
+  // console.log(newUser);
   res.status(CREATED).json(
     response({
       message: "Create endpoint works",

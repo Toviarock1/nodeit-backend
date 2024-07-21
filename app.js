@@ -10,6 +10,7 @@ const response = require("./utils/responseObject");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const projectRoutes = require("./routes/project");
+const todoRoutes = require("./routes/todo");
 const { NOTFOUND } = require("./constants/statusCodes");
 
 app.use(cors());
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/project", projectRoutes);
+app.use("/api/v1/todo", todoRoutes);
 app.use("*", (req, res) => {
   console.log(req);
   res.status(NOTFOUND).json(
