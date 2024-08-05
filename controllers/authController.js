@@ -15,7 +15,9 @@ async function login(req, res) {
   // console.log(req.body);
   const payload = _.pick(req.body, ["email", "password"]);
   console.log("PAYLOAD", payload);
-  if (Object.keys(payload).length <= 1) {
+  try {
+    await loginValidation(payload);
+  } catch (error) {
     return res.status(BAD_REQUEST).json(
       response({
         message: "Please provide the following fields (email & password)",
@@ -25,6 +27,7 @@ async function login(req, res) {
       })
     );
   }
+
   const user = await prisma.user.findUnique({
     where: {
       email: payload.email,

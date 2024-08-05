@@ -35,7 +35,7 @@ async function createProject(req, res) {
         userId: req.user.id,
       },
     });
-    prisma.$disconnect();
+    // prisma.$disconnect();
     console.log(createProject);
     res.status(OK).json(
       response({

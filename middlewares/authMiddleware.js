@@ -4,7 +4,7 @@ const response = require("../utils/responseObject");
 
 module.exports = function (req, res, next) {
   const token = req.header("authorization") || req.header("Authorization");
-  console.log(req.header("authorization"));
+  // console.log(req.header("authorization"));
   if (!token)
     return res.status(FORBIDEN).json(
       response({
@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
       );
     }
     req.user = decoded;
-    console.log("user", decoded);
+    // console.log("user", decoded);
     next();
   } catch (err) {
     res.status(BAD_REQUEST).json(
