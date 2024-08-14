@@ -3,7 +3,7 @@ const { prisma } = require("../utils/prisma");
 const response = require("../utils/responseObject");
 const { createValidation } = require("../validations/projectValidation");
 const _ = require("lodash");
-
+// create project
 async function createProject(req, res) {
   const payload = _.pick(req.body, ["title", "about", "expiresAt"]);
 
@@ -65,7 +65,7 @@ async function getProjects(req, res) {
   });
 
   if (userProjects.length > 0) {
-    res.status(OK).json(
+    return res.status(OK).json(
       response({
         message: "user projects",
         status: OK,
@@ -74,7 +74,7 @@ async function getProjects(req, res) {
       })
     );
   }
-  res.status(BAD_REQUEST).json(
+  return res.status(BAD_REQUEST).json(
     response({
       message: "no projects for current user",
       status: BAD_REQUEST,
@@ -83,7 +83,7 @@ async function getProjects(req, res) {
     })
   );
 }
-
+// update projects
 async function updateProjects(req, res) {
   const payload = _.pick(req.body, [
     "title",
@@ -177,5 +177,46 @@ async function updateProjects(req, res) {
   );
   console.log(updateUserProject);
 }
+// delete project
+async function deleteProjects(req, res) {
+  const { projectId } = req.params;
 
-module.exports = { createProject, getProjects, updateProjects };
+  const projectExist = await prisma.project.findUnique({
+    where: {
+      id: projectId,
+    },
+  });
+
+  if (!projectExist) {
+    return res.status(NOTFOUND).json(
+      response({
+        message: `no projects correspond with the given id(${projectId})`,
+        status: NOTFOUND,
+        success: false,
+        data: {},
+      })
+    );
+  }
+
+  const deleteTodos = await prisma.todo.deleteMany({
+    where: {
+      todoId: projectExist.id,
+    },
+  });
+
+  const deleteProject = await prisma.project.delete({
+    where: {
+      id: projectExist.id,
+    },
+  });
+  return res.status(OK).json(
+    response({
+      message: `Project deleted successfully`,
+      status: OK,
+      success: true,
+      data: {},
+    })
+  );
+}
+
+module.exports = { createProject, getProjects, updateProjects, deleteProjects };

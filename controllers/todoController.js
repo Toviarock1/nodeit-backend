@@ -10,6 +10,7 @@ const { todoValidation } = require("../validations/todoValidation");
 const _ = require("lodash");
 
 async function createTodo(req, res) {
+  // console.log("we got here");
   const payload = _.pick(req.body, [
     "title",
     "description",
@@ -36,9 +37,9 @@ async function createTodo(req, res) {
   const createTodo = await prisma.todo.create({
     data: payload,
   });
-  console.log(createTodo);
+  // console.log(createTodo);
   if (createTodo.id) {
-    res.status(OK).json(
+    return res.status(OK).json(
       response({
         message: "Todo created successfully",
         status: OK,
@@ -47,6 +48,14 @@ async function createTodo(req, res) {
       })
     );
   }
+  return res.status(BAD_REQUEST).json(
+    response({
+      message: "Failed to create quiz",
+      status: BAD_REQUEST,
+      success: false,
+      data: {},
+    })
+  );
 }
 
 // get todos for a specific project

@@ -43,7 +43,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/project", projectRoutes);
 app.use("/api/v1/todo", todoRoutes);
 app.use("*", (req, res) => {
-  console.log(req);
+  // console.log(req);
   res.status(NOTFOUND).json(
     response({
       message: `the following endpoint ${req.originalUrl} is not found. `,
