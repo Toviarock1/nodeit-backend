@@ -209,3 +209,5 @@
 {"err":{"clientVersion":"5.16.1","name":"PrismaClientInitializationError"},"level":"info","message":"\nInvalid `prisma.user.findUnique()` invocation in\n/Users/chubiy/Desktop/work/IT/nodeIT5/controllers/authController.js:31:34\n\n  28   );\n  29 }\n  30 \n→ 31 const user = await prisma.user.findUnique(\nCan't reach database server at `dpg-cqbi3piju9rs7391o8b0-a.oregon-postgres.render.com:5432`\n\nPlease make sure your database server is running at `dpg-cqbi3piju9rs7391o8b0-a.oregon-postgres.render.com:5432`.","service":"user-service"}
 {"err":{"code":"ERR_HTTP_HEADERS_SENT"},"level":"info","message":"Cannot set headers after they are sent to the client","service":"user-service"}
 {"err":{"code":"ERR_HTTP_HEADERS_SENT"},"level":"info","message":"Cannot set headers after they are sent to the client","service":"user-service"}
+{"err":{},"level":"info","message":"Cannot read properties of null (reading 'password')","service":"user-service"}
+{"err":{},"level":"info","message":"Cannot read properties of null (reading 'password')","service":"user-service"}
