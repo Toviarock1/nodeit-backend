@@ -236,8 +236,6 @@ Authorization: Bearer <your-jwt-token>
 # Start development server with hot reload
 npm run dev
 
-# Run tests
-npm test
 ```
 
 ### Error Logging
